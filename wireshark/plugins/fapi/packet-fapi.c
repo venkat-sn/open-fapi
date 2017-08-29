@@ -9,6 +9,9 @@
 #define FAPI_HIDCI0_HIDCI0PDU_INFO_DCI0PDU_SIZE		(24)
 #define FAPI_RACH_IND_RACHPDU_INFO_SIZE			(8)
 #define FAPI_ULHARQ_IND_HARQPDU_INFO_SIZE		(8)
+#define FAPI_ULSCHHARQPDU_ULSCHPDU_INFO_SIZE		(20)
+#define FAPI_ULSCHHARQPDU_HARQ_INFO_SIZE		(4)
+#define FAPI_ULSCHHARQPDU_INITIALTXPARAM_INFO_SIZE	(4)
 
 static int proto_fapi                                   							= -1;
 
@@ -134,6 +137,25 @@ static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_ulcqi						= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_ri						= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_padding						= -1;
 
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu							= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_handle						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_rnti						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_padding						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding					= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_handle					        = -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_rnti						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo_pucchindex				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo					= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex1				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_harqsize				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_padding				= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu							= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_handle						= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_rnti						= -1;
@@ -156,6 +178,32 @@ static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_harqproc					= -
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_txmode						= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_currtxnb					= -1;
 static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_nsrs						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu						= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs		= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled		= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits		= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo					= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode			= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo				= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial		= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb		= -1;
+static int hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding			= -1;
 
 static int hf_fapi_dldatatx_req											= -1;
 static int hf_fapi_dldatatx_req_sfnsf										= -1;
@@ -381,6 +429,25 @@ static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_ulcqi						= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_ri						= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_padding						= -1;
 
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_handle						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_rnti						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_padding					= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo					= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_handle					= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_rnti						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo					= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo_pucchindex				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo					= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex1				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_harqsize				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_padding				= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu							= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_handle						= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_rnti						= -1;
@@ -403,6 +470,32 @@ static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_harqproc					=
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_txmode					= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_currtxnb					= -1;
 static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_nsrs						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu						= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype		= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs		= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled		= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits		= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo					= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding				= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo			= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial		= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb		= -1;
+static gint ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding		= -1;
 
 static gint ett_fapi_dldatatx_req										= -1;
 static gint ett_fapi_dldatatx_req_sfnsf										= -1;
@@ -580,6 +673,10 @@ static const value_string ulconfig_req_ulsch_txmode_vals[] = {
 	{1, "MIMO"},
 };
 
+static const value_string ulconfig_req_harqinfo_acknackmode_vals[] = {
+	{0, "BUNDLING"},
+	{1, "MULTIPLEXING"},
+};
 static const value_string dlconfig_req_dlsch_pa_vals[] = {
 	{0, "-6 dB"},
 	{1, "-4.77 dB"},
@@ -1108,6 +1205,119 @@ static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_srinfo(tvbuff_
     return tvb_captured_length(tvb);
 }
 
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+    proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo, tvb, *offset, pdu_size, ENC_NA);
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle, tvb, *offset, 4, ENC_BIG_ENDIAN);
+    *offset += 4;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size, tvb, *offset, 2, ENC_BIG_ENDIAN);
+    *offset += 2;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti, tvb, *offset, 2, ENC_BIG_ENDIAN);
+    *offset += 2;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs, tvb, *offset, 1, ENC_NA);
+    *offset += 1;
+    return tvb_captured_length(tvb);
+}
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+    proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo, tvb, *offset, pdu_size, ENC_NA);
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    return tvb_captured_length(tvb);
+}
+
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+    proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo, tvb, *offset, pdu_size, ENC_NA);
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding, tvb, *offset, 2, ENC_NA);
+
+    *offset += 2;
+
+    return tvb_captured_length(tvb);
+}
+
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+	proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu, tvb, *offset, pdu_size, ENC_NA);
+
+    	proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo);
+	dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_tree, data, offset, FAPI_ULSCHHARQPDU_ULSCHPDU_INFO_SIZE);
+
+    	proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo);
+	dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_tree, data, offset, FAPI_ULSCHHARQPDU_HARQ_INFO_SIZE);
+
+    	proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparam_info_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo);
+	dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparam_info_tree, data, offset, FAPI_ULSCHHARQPDU_INITIALTXPARAM_INFO_SIZE);
+
+	return tvb_captured_length(tvb);
+}
 static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
 {
     proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_ulschpdu_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu, tvb, *offset, pdu_size, ENC_NA);
@@ -1208,6 +1418,60 @@ static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu(tvbuff_t *tvb,
     return tvb_captured_length(tvb);
 }
 
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+    proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo, tvb, *offset, pdu_size, ENC_NA);
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex, tvb, *offset, 2, ENC_BIG_ENDIAN);
+
+    *offset += 2;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1, tvb, *offset, 2, ENC_BIG_ENDIAN);
+    *offset += 2;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize, tvb, *offset, 1, ENC_NA);
+
+    *offset += 1;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding, tvb, *offset, 3, ENC_NA);
+
+    *offset += 3;
+
+    return tvb_captured_length(tvb);
+}
+
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+	return tvb_captured_length(tvb);
+}
+static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
+{
+    proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu, tvb, *offset, pdu_size, ENC_NA);
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_handle_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_handle);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_handle_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_handle, tvb, *offset, 4, ENC_BIG_ENDIAN);
+
+    *offset += 4;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_rnti_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_rnti);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_rnti_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_rnti, tvb, *offset, 2, ENC_BIG_ENDIAN);
+
+    *offset += 2;
+
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_padding_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_padding);
+    proto_tree_add_item(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_padding_tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_padding, tvb, *offset, 2, ENC_NA);
+
+    *offset += 2;
+    
+    proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo);
+    dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_harqinfo_tree, data, offset, pdu_size);
+
+    return tvb_captured_length(tvb);
+}
 static int dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree _U_, void *data _U_, guint *offset _U_, guint8 pdu_size _U_)
 {
     proto_item *fapi_ulconfig_pdu_info_pduconfiginfo_cqipdu_item = proto_tree_add_item(tree, hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu, tvb, *offset, pdu_size, ENC_NA);
@@ -1291,14 +1555,35 @@ static int dissect_fapi_ulconfig_pdu_info(tvbuff_t *tvb, packet_info *pinfo, pro
 	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_ulschpdu_tree, data, offset, pdu_size - 2);
 	    }
             break;
-	    case 5: { //UCI SR
-                proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_srpdu_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu);
-	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_srpdu_tree, data, offset, pdu_size - 2);
+            case 1: { //ULSCH CQI RI
+	    }
+            break;
+            case 2: { //ULSCH HARQ
+                proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu);
+	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_ulschharqpdu_tree, data, offset, pdu_size - 2);
+	    }
+            break;
+            case 3: { //ULSCH CQI HARQ RI
 	    }
             break;
 	    case 4: { //UCI CQI
                 proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_cqipdu_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu);
 	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_cqipdu_tree, data, offset, pdu_size);
+            }
+            break;
+	    case 5: { //UCI SR
+                proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_srpdu_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu);
+	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_srpdu_tree, data, offset, pdu_size - 2);
+	    }
+            break;
+	    case 6: { //UCI HARQ
+                proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu);
+	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_harqpdu_tree, data, offset, pdu_size);
+	    }
+            break;
+            case 7: { //UCI SR HARQ
+                proto_tree *fapi_ulconfig_pdu_info_pduconfiginfo_srharqpdu_tree = proto_item_add_subtree(fapi_ulconfig_pdu_info_pduconfiginfo_item, ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu);
+	        dissect_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu(tvb, pinfo, fapi_ulconfig_pdu_info_pduconfiginfo_srharqpdu_tree, data, offset, pdu_size);
             }
             break;
     }
@@ -2310,6 +2595,24 @@ proto_register_fapi(void)
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_ri, {"ri", "fapi.ulconfig_req.pduConfigInfo.pduConfig.cqiPdu.ri", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_padding, {"padding", "fapi.ulconfig_req.pduConfigInfo.pduConfig.cqiPdu.padding", FT_BYTES, BASE_NONE, NULL, 0x0, NULL, HFILL } },
 
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu, {"harqPdu", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_handle, {"handle", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.handle", FT_UINT32, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_rnti, {"rnti", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.rnti", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_padding, {"padding", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.padding", FT_BYTES, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo, {"harqInfo", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.harqInfo", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex, {"pucchIndex", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.harqInfo.pucchIndex", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1, {"pucchIndex1", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.harqInfo.pucchIndex1", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize, {"harqSize", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.harqInfo.harqSize", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding, {"padding", "fapi.ulconfig_req.pduConfigInfo.pduConfig.harqPdu.harqInfo.padding", FT_BYTES, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu, {"srHarqPdu", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_handle, {"handle", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.handle", FT_UINT32, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_rnti, {"rnti", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.rnti", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo, {"srInfo", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.srInfo", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo_pucchindex, {"pucchIndex", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.srInfo.pucchIndex", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex, {"pucchIndex", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.harqInfo.pucchIndex", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex1, {"pucchIndex1", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.harqInfo.pucchIndex1", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_harqsize, {"harqSize", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.harqInfo.harqSize", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+	{ &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_padding, {"padding", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srHarqPdu.harqInfo.padding", FT_BYTES, BASE_NONE, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu, {"srPdu", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srPdu", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_handle, {"handle", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srPdu.handle", FT_UINT32, BASE_DEC, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_rnti, {"rnti", "fapi.ulconfig_req.pduConfigInfo.pduConfig.srPdu.rnti", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
@@ -2318,7 +2621,7 @@ proto_register_fapi(void)
 
 
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu, {"ulSchPdu", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
-        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_handle, {"ulSchPdu", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.handle", FT_UINT32, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_handle, {"handle", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.handle", FT_UINT32, BASE_DEC, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_size, {"size", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.size", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_rnti, {"rnti", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.rnti", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_rbstart, {"rbStart", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.rbStart", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
@@ -2333,6 +2636,32 @@ proto_register_fapi(void)
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_txmode, {"ulTxMode", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.ulTxMode", FT_UINT8, BASE_DEC, (const void *)ulconfig_req_ulsch_txmode_vals, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_currtxnb, {"currTxNB", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.currTxNB", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
         { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_nsrs, {"nSRS", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchPdu.nSRS", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu, {"ulSchHarqPdu", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo, {"ulSchPduInfo", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle, {"handle", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.handle", FT_UINT32, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size, {"size", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.size", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti, {"rnti", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.rnti", FT_UINT16, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart, {"rbStart", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.rbStart", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb, {"numOfRB", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.numOfRB", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype, {"modulationType", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.modulationType", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs, {"cyclicShift2ForDMRS", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.cyclicShift2ForDMRS", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled, {"freqHoppingEnabledFlag", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.freqHoppingEnabledFlag", FT_BOOLEAN, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits, {"frequencyHoppingBits", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.frequencyHoppingBits", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi, {"newDataIndication", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.newDataIndication", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv, {"redundancyVersion", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.redundancyVersion", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc, {"harqProcessNumber", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.harqProcessNumber", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode, {"ulTxMode", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.ulTxMode", FT_UINT8, BASE_DEC, (const void *)ulconfig_req_ulsch_txmode_vals, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb, {"currTxNB", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.currTxNB", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs, {"nSRS", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.ulSchPduInfo.nSRS", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo, {"harqInfo", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.harqInfo", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize, {"harqSize", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.harqInfo.harqSize", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq, {"deltaOffsetHarq", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.harqInfo.deltaOffsetHarq", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode, {"ackNackMode", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.harqInfo.ackNackMode", FT_UINT8, BASE_DEC, (const void *)&ulconfig_req_harqinfo_acknackmode_vals, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding, {"padding", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.harqInfo.padding", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo, {"initialTxParamInfo", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.initialTxParamInfo", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial, {"nSRSInitial", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.initialTxParamInfo.nSRSInitial", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb, {"initialNumOfRB", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.initialTxParamInfo.initialNumOfRB", FT_UINT8, BASE_DEC, NULL, 0x0, NULL, HFILL } },
+        { &hf_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding, {"padding", "fapi.ulconfig_req.pduConfigInfo.pduConfig.ulSchHarqPdu.initialTxParamInfo.padding", FT_BYTES, BASE_NONE, NULL, 0x0, NULL, HFILL } },
 
 	{ &hf_fapi_dldatatx_req, {"dl data tx req", "fapi.dldatatx_req", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
 	{ &hf_fapi_dldatatx_req_sfnsf, {"sfnsf", "fapi.dldatatx_req.sfnsf", FT_NONE, BASE_NONE, NULL, 0x0, NULL, HFILL } },
@@ -2563,6 +2892,25 @@ proto_register_fapi(void)
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_ri,
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_cqipdu_padding,
 
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_handle,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_rnti,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_padding,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_pucchindex1,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_harqsize,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_harqpdu_harqinfo_padding,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_handle,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_rnti,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_harqsize,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_pucchindex1,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_harqinfo_padding,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srharqpdu_srinfo_pucchindex,
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu,
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_handle,
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_srpdu_rnti,
@@ -2585,6 +2933,32 @@ proto_register_fapi(void)
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_txmode,
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_currtxnb,
 	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschpdu_nsrs,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_handle,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_size,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rnti,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rbstart,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_numofrb,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_modulationtype,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_cyclicshift2fordmrs,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingenabled,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_freqhoppingbits,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_ndi,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_rv,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_harqproc,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_txmode,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_currtxnb,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_ulschpduinfo_nsrs,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_harqsize,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_deltaoffsetharq,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_acknackmode,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_harqinfo_padding,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_nsrsinitial,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_initialnumrb,
+	&ett_fapi_ulconfig_req_pdu_info_pduconfiginfo_ulschharqpdu_initialtxparaminfo_padding,
 
 	&ett_fapi_dldatatx_req,
 	&ett_fapi_dldatatx_req_sfnsf,
